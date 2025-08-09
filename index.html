@@ -1,0 +1,1823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TTC Discovery Questionnaire - Professional Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        .tab-button {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            color: #495057;
+            padding: 10px 15px;
+            margin: 2px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        .tab-button:hover {
+            background: #d4edda;
+            color: #155724;
+        }
+        .tab-button.active {
+            background: #28a745;
+            color: white;
+            border-color: #28a745;
+        }
+        .form-section {
+            display: none;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .form-section.active {
+            display: block;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        .form-input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .form-input:focus {
+            border-color: #28a745;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(40, 167, 69, 0.25);
+        }
+        .required {
+            color: #dc3545;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        .table-responsive {
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+        }
+        th, td {
+            border: 1px solid #dee2e6;
+            padding: 8px 12px;
+            text-align: left;
+        }
+        th {
+            background: #f8f9fa;
+            font-weight: bold;
+        }
+        .upload-area {
+            border: 2px dashed #28a745;
+            border-radius: 4px;
+            padding: 20px;
+            text-align: center;
+            margin: 10px 0;
+            background: #f8f9fa;
+        }
+        .btn-primary {
+            background: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .btn-primary:hover {
+            background: #218838;
+        }
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .progress-indicator {
+            background: #e9ecef;
+            height: 6px;
+            border-radius: 3px;
+            margin: 10px 0;
+        }
+        .progress-bar {
+            background: #28a745;
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+        .location-card {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+        }
+        .checkbox-group input[type="checkbox"] {
+            margin-right: 8px;
+        }
+         {
+            .no-print { display: none; }
+            .form-section { display: block !important; page-break-inside: avoid; }
+            .tab-button { display: none; }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans">
+    <div class="container mx-auto px-4 py-6">
+        <!-- Header -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <h1 class="text-3xl font-bold text-green-600 mb-2">TTC Discovery Questionnaire v1.61</h1>
+            <p class="text-gray-600">Complete client information gathering for managed services assessment</p>
+            <div class="progress-indicator mt-4">
+                <div class="progress-bar" id="overallProgress" style="width: 0%"></div>
+            </div>
+            <p class="text-sm text-gray-500 mt-2">Overall Completion: <span id="progressText">0%</span></p>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="bg-white rounded-lg shadow-md p-4 mb-6 no-print">
+            <div class="flex flex-wrap gap-2">
+                <button class="tab-button active" onclick="showTab('dashboard')">Dashboard</button>
+                <button class="tab-button" onclick="showTab('initial')">Initial Questions</button>
+                <button class="tab-button" onclick="showTab('overview')">Client Overview</button>
+                <button class="tab-button" onclick="showTab('locations')">Physical Locations</button>
+                <button class="tab-button" onclick="showTab('users')">User List</button>
+                <button class="tab-button" onclick="showTab('isp')">Internet/ISP</button>
+                <button class="tab-button" onclick="showTab('alarm')">Alarm Systems</button>
+                <button class="tab-button" onclick="showTab('vendors')">IT Vendors</button>
+                <button class="tab-button" onclick="showTab('software')">Software Applications</button>
+                <button class="tab-button" onclick="showTab('servers')">Server Infrastructure</button>
+                <button class="tab-button" onclick="showTab('equipment')">Equipment</button>
+                <button class="tab-button" onclick="showTab('printers')">Network Printers</button>
+                <button class="tab-button" onclick="showTab('voip')">VoIP Services</button>
+            </div>
+        </div>
+
+        <!-- Dashboard Section -->
+        <div id="dashboard" class="form-section active">
+            <h2 class="text-2xl font-bold mb-4 text-green-600"><i class="fas fa-tachometer-alt mr-2"></i>Dashboard</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div class="bg-green-50 p-4 rounded-lg border-l-4 border-green-500">
+                    <h3 class="font-bold text-green-800">Onboarding Phase 1</h3>
+                    <div class="mt-2">
+                        <div class="flex justify-between">
+                            <span class="text-sm">Initial Questions</span>
+                            <span class="text-sm font-bold" id="initialStatus">Incomplete</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-sm">Client Overview</span>
+                            <span class="text-sm font-bold" id="overviewStatus">Incomplete</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500">
+                    <h3 class="font-bold text-blue-800">Onboarding Phase 2</h3>
+                    <div class="mt-2">
+                        <div class="flex justify-between">
+                            <span class="text-sm">Physical Locations</span>
+                            <span class="text-sm font-bold" id="locationsStatus">Incomplete</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-sm">User List</span>
+                            <span class="text-sm font-bold" id="usersStatus">Incomplete</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-sm">ISP Information</span>
+                            <span class="text-sm font-bold" id="ispStatus">Incomplete</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-sm">Alarm Systems</span>
+                            <span class="text-sm font-bold" id="alarmStatus">Incomplete</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-purple-50 p-4 rounded-lg border-l-4 border-purple-500">
+                    <h3 class="font-bold text-purple-800">Technical Assessment</h3>
+                    <div class="mt-2">
+                        <div class="flex justify-between">
+                            <span class="text-sm">IT Vendors</span>
+                            <span class="text-sm font-bold" id="vendorsStatus">Incomplete</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-sm">Software Apps</span>
+                            <span class="text-sm font-bold" id="softwareStatus">Incomplete</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-sm">Servers</span>
+                            <span class="text-sm font-bold" id="serversStatus">Incomplete</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-sm">Equipment</span>
+                            <span class="text-sm font-bold" id="equipmentStatus">Incomplete</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                <h3 class="font-bold text-yellow-800 mb-2">Instructions:</h3>
+                <ol class="list-decimal list-inside text-sm space-y-1">
+                    <li>Please use the navigation tabs above to access different sections of this questionnaire.</li>
+                    <li>Complete all required fields in each section (marked with <span class="required">*</span>).</li>
+                    <li>The progress indicator will update as you complete each section.</li>
+                    <li>Please notify your TTC Account Manager once the entire questionnaire is completed.</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Initial Questions Section -->
+        <div id="initial" class="form-section">
+            <h2 class="text-2xl font-bold mb-4 text-green-600"><i class="fas fa-question-circle mr-2"></i>Initial Questions</h2>
+            <p class="text-gray-600 mb-6">This section should be completed by a TTC Account Manager or Engineer.</p>
+            
+            <div class="space-y-6">
+                <div class="form-group">
+                    <label class="form-label">1. Client Business Name <span class="required">*</span></label>
+                    <input type="text" class="form-input" id="clientName" placeholder="Enter the client's business name">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">2. Billing Address <span class="required">*</span></label>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <input type="text" class="form-input" id="billingStreet" placeholder="Street Address">
+                        <input type="text" class="form-input" id="billingCity" placeholder="City">
+                        <input type="text" class="form-input" id="billingState" placeholder="State">
+                        <input type="text" class="form-input" id="billingZip" placeholder="Zip Code">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">3. User Count <span class="required">*</span></label>
+                    <p class="text-sm text-gray-600 mb-3">How many USERS does this company have? This is a count of anyone that uses one or more computers, that work on-site, remote or hybrid.</p>
+                    <div class="grid md:grid-cols-3 gap-4">
+                        <div>
+                            <label class="form-label">Standard - Cloud Environment</label>
+                            <input type="number" class="form-input" id="standardCloud" min="0" placeholder="0">
+                        </div>
+                        <div>
+                            <label class="form-label">Standard - Hybrid Environment</label>
+                            <input type="number" class="form-input" id="standardHybrid" min="0" placeholder="0">
+                        </div>
+                        <div>
+                            <label class="form-label">Standard - On Premise</label>
+                            <input type="number" class="form-input" id="standardOnPrem" min="0" placeholder="0">
+                        </div>
+                        <div>
+                            <label class="form-label">Restricted Users</label>
+                            <input type="number" class="form-input" id="restrictedUsers" min="0" placeholder="0">
+                        </div>
+                        <div>
+                            <label class="form-label">Email Only Users</label>
+                            <input type="number" class="form-input" id="emailOnlyUsers" min="0" placeholder="0">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">4. Number of Locations <span class="required">*</span></label>
+                    <input type="number" class="form-input" id="locationCount" min="1" placeholder="How many locations does this company have?">
+                    <p class="text-sm text-gray-600 mt-1">This is anywhere there is a FIREWALL that would need to be managed.</p>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">5. Business Hours <span class="required">*</span></label>
+                    <textarea class="form-input" id="businessHours" rows="3" placeholder="Please provide the normal business hours for each location"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">6. Server Count</label>
+                    <p class="text-sm text-gray-600 mb-3">How many SERVERS does this company have? If already migrated to Cloud, please indicate below.</p>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="form-label">Cloud Servers</label>
+                            <input type="number" class="form-input" id="cloudServers" min="0" placeholder="0">
+                        </div>
+                        <div>
+                            <label class="form-label">Azure / Windows Virtual Desktop Host Pools</label>
+                            <input type="number" class="form-input" id="azureHosts" min="0" placeholder="0">
+                        </div>
+                        <div>
+                            <label class="form-label">Essential Workstations</label>
+                            <input type="number" class="form-input" id="essentialWorkstations" min="0" placeholder="0">
+                        </div>
+                        <div>
+                            <label class="form-label">Microsoft Exchange Servers</label>
+                            <input type="number" class="form-input" id="exchangeServers" min="0" placeholder="0">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">7. Remote Access Services</label>
+                    <textarea class="form-input" id="remoteAccess" rows="3" placeholder="Are any services in use to gain remote access to office computers? (ie, VPN, LMI)"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">8. Monthly Updates and Reboots</label>
+                    <div class="flex items-center space-x-4">
+                        <label class="flex items-center">
+                            <input type="radio" name="monthlyUpdates" value="yes" class="mr-2">
+                            <span>Yes</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="monthlyUpdates" value="no" class="mr-2">
+                            <span>No</span>
+                        </label>
+                    </div>
+                    <p class="text-sm text-gray-600 mt-1">Can your business support monthly updates and reboots of your IT infrastructure?</p>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">9. Anti-virus Exclusions List</label>
+                    <div class="flex items-center space-x-4 mb-2">
+                        <label class="flex items-center">
+                            <input type="radio" name="antivirusExclusions" value="yes" class="mr-2">
+                            <span>Yes</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="antivirusExclusions" value="no" class="mr-2">
+                            <span>No</span>
+                        </label>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-2">Can you upload your anti-virus exclusions/exceptions list to TTC?</p>
+                    <textarea class="form-input" id="antivirusDetails" rows="2" placeholder="Additional details or explanation"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">10. Outgoing MSP Information</label>
+                    <div class="flex items-center space-x-4 mb-4">
+                        <label class="flex items-center">
+                            <input type="radio" name="outgoingMSP" value="yes" class="mr-2">
+                            <span>Yes</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="outgoingMSP" value="no" class="mr-2">
+                            <span>No</span>
+                        </label>
+                    </div>
+                    <div id="mspDetails" style="display: none;">
+                        <div class="grid md:grid-cols-3 gap-4 mb-4">
+                            <input type="text" class="form-input" id="mspName" placeholder="MSP Company Name">
+                            <input type="email" class="form-input" id="mspEmail" placeholder="Email">
+                            <input type="tel" class="form-input" id="mspPhone" placeholder="Phone">
+                        </div>
+                        <textarea class="form-input mb-4" id="mspTimeline" rows="2" placeholder="Timeline for transition from outgoing MSP"></textarea>
+                        <textarea class="form-input mb-4" id="mspSupport" rows="2" placeholder="What level of support will be provided by the outgoing MSP?"></textarea>
+                        <textarea class="form-input mb-4" id="mspCredentials" rows="2" placeholder="When can TTC expect admin credentials from the outgoing MSP?"></textarea>
+                        <textarea class="form-input" id="mspProjects" rows="2" placeholder="Are there any projects the previous MSP did not complete?"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Client Overview Section -->
+        <div id="overview" class="form-section">
+            <h2 class="text-2xl font-bold mb-4 text-green-600"><i class="fas fa-building mr-2"></i>Client Overview Blurb</h2>
+            <p class="text-gray-600 mb-6">This section should be completed by the TTC Account Manager for this client.</p>
+            
+            <div class="space-y-6">
+                <div class="form-group">
+                    <label class="form-label">Client Name <span class="required">*</span></label>
+                    <input type="text" class="form-input" id="overviewClientName" placeholder="Enter client's business name">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Client Abbreviation</label>
+                    <input type="text" class="form-input" id="clientAbbrev" placeholder="e.g., AMG">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Nature of Business <span class="required">*</span></label>
+                    <textarea class="form-input" id="businessNature" rows="3" placeholder="Describe the client's business (e.g., 'a 12 year old business specializing in the entertainment industry')"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Business Size</label>
+                    <select class="form-input" id="businessSize">
+                        <option value="">Select business size</option>
+                        <option value="small">Small</option>
+                        <option value="medium">Medium</option>
+                        <option value="large">Large</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Number of Sites</label>
+                    <input type="number" class="form-input" id="overviewSites" min="1" placeholder="Number of physical locations">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Total Number of Users</label>
+                    <input type="number" class="form-input" id="overviewUsers" min="1" placeholder="Total user count">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Email Host</label>
+                    <input type="text" class="form-input" id="emailHost" placeholder="e.g., Office365, Google Workspace">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Primary Applications</label>
+                    <div class="space-y-2">
+                        <input type="text" class="form-input" id="primaryApp1" placeholder="Primary Application #1 (e.g., QuickBooks)">
+                        <input type="text" class="form-input" id="primaryApp2" placeholder="Primary Application #2 (e.g., MS Office)">
+                        <input type="text" class="form-input" id="primaryApp3" placeholder="Primary Application #3 (optional)">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">VIP Contacts</label>
+                    <div class="space-y-4">
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <input type="text" class="form-input" id="vip1Name" placeholder="VIP #1 Name">
+                            <input type="text" class="form-input" id="vip1Title" placeholder="VIP #1 Title">
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <input type="text" class="form-input" id="vip2Name" placeholder="VIP #2 Name">
+                            <input type="text" class="form-input" id="vip2Title" placeholder="VIP #2 Title">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Primary Points of Contact</label>
+                    <div class="space-y-4">
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <input type="text" class="form-input" id="poc1Name" placeholder="POC #1 Name">
+                            <input type="text" class="form-input" id="poc1Title" placeholder="POC #1 Title">
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <input type="text" class="form-input" id="poc2Name" placeholder="POC #2 Name">
+                            <input type="text" class="form-input" id="poc2Title" placeholder="POC #2 Title">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Nuances & Notes</label>
+                    <textarea class="form-input" id="clientNuances" rows="4" placeholder="Special considerations, unique requirements, or important notes about this client"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Source Information</label>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <input type="text" class="form-input" id="infoSource" placeholder="Source (e.g., Terry Hall)">
+                        <input type="date" class="form-input" id="infoDate">
+                    </div>
+                </div>
+
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h3 class="font-bold mb-2">Generated Overview Blurb:</h3>
+                    <div id="generatedBlurb" class="bg-white p-3 rounded border min-h-20 text-gray-700 italic">
+                        The overview will be automatically generated based on the information you provide above.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Physical Locations Section -->
+        <div id="locations" class="form-section">
+            <h2 class="text-2xl font-bold mb-4 text-green-600"><i class="fas fa-map-marker-alt mr-2"></i>Physical Locations</h2>
+            <p class="text-gray-600 mb-6">Excluding remote users and their private homes, a PHYSICAL LOCATION is defined as a place where TTC will be providing service.</p>
+            
+            <div class="bg-yellow-50 p-4 rounded-lg border border-yellow-200 mb-6">
+                <h3 class="font-bold text-yellow-800 mb-2">Instructions:</h3>
+                <ol class="list-decimal list-inside text-sm space-y-1">
+                    <li>For each physical location, provide a name and street address.</li>
+                    <li>Mark ONE location as your main Billing Address.</li>
+                    <li>Indicate if any building is considered "historical" or protected by regulations.</li>
+                    <li>Upload floorplans if available (include ISP entry and data drops if possible).</li>
+                </ol>
+            </div>
+
+            <div class="mb-4">
+                <button type="button" class="btn-primary" onclick="addLocation()">
+                    <i class="fas fa-plus mr-2"></i>Add Location
+                </button>
+            </div>
+
+            <div id="locationsList"></div>
+        </div>
+
+        <!-- User List Section -->
+        <div id="users" class="form-section">
+            <h2 class="text-2xl font-bold mb-4 text-green-600"><i class="fas fa-users mr-2"></i>Signature User List</h2>
+            
+            <div class="bg-blue-50 p-4 rounded-lg mb-6">
+                <h3 class="font-bold text-blue-800 mb-2">User Type Definitions:</h3>
+                <div class="space-y-3 text-sm">
+                    <div>
+                        <strong>Standard User:</strong> An authorized individual with access to desktop operating system, multiple applications, and email. Can contact TTC Help Desk directly.
+                    </div>
+                    <div>
+                        <strong>Restricted User:</strong> Limited access to tablet/smartphone/terminal, single application, internal communications only. Cannot contact Help Desk directly.
+                    </div>
+                    <div>
+                        <strong>Email-Only User:</strong> Access to email account and Microsoft Teams chat only via tablet/smartphone. Cannot contact Help Desk directly.
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <button type="button" class="btn-primary" onclick="addUser()">
+                    <i class="fas fa-user-plus mr-2"></i>Add User
+                </button>
+            </div>
+
+            <div class="table-responsive">
+                <table id="usersTable">
+                    <thead>
+                        <tr>
+                            <th>Last Name</th>
+                            <th>First Name</th>
+                            <th>Standard</th>
+                            <th>Restricted</th>
+                            <th>Email Only</th>
+                            <th>Notes</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersTableBody">
+                        <tr>
+                            <td>Doe</td>
+                            <td>John</td>
+                            <td><input type="checkbox" checked disabled></td>
+                            <td><input type="checkbox" disabled></td>
+                            <td><input type="checkbox" disabled></td>
+                            <td>Example user</td>
+                            <td><span class="text-gray-500">Example</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ISP Section -->
+        <div id="isp" class="form-section">
+            <h2 class="text-2xl font-bold mb-4 text-green-600"><i class="fas fa-globe mr-2"></i>Internet Service Provider (ISP) by Location</h2>
+            
+            <div class="checkbox-group mb-4">
+                <input type="checkbox" id="ispComplete">
+                <label for="ispComplete">Check this box when you have entered all available information</label>
+            </div>
+
+            <p class="text-gray-600 mb-6">Provide details for EACH Internet Service Provider at each Physical Location.</p>
+
+            <div id="ispByLocation"></div>
+        </div>
+
+        <!-- Alarm Systems Section -->
+        <div id="alarm" class="form-section">
+            <h2 class="text-2xl font-bold mb-4 text-green-600"><i class="fas fa-shield-alt mr-2"></i>Alarm System Information by Location</h2>
+            
+            <div class="checkbox-group mb-4">
+                <input type="checkbox" id="alarmComplete">
+                <label for="alarmComplete">Check this box when you have entered all available information</label>
+            </div>
+
+            <p class="text-gray-600 mb-6">Do any of your locations have an Alarm System? Some systems communicate over the internet, making their configuration and operation a concern for your managed service provider.</p>
+
+            <div id="alarmByLocation"></div>
+        </div>
+
+        <!-- IT Vendors Section -->
+        <div id="vendors" class="form-section">
+            <h2 class="text-2xl font-bold mb-4 text-green-600"><i class="fas fa-handshake mr-2"></i>IT Related Vendors</h2>
+            
+            <div class="checkbox-group mb-4">
+                <input type="checkbox" id="vendorsComplete">
+                <label for="vendorsComplete">Check this box when you have entered all available information</label>
+            </div>
+
+            <p class="text-gray-600 mb-6">Indicate if applicable, then provide relevant information for each vendor type.</p>
+
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Vendor Type</th>
+                            <th>Examples</th>
+                            <th>Select</th>
+                            <th>Details</th>
+                            <th>Contact Info</th>
+                            <th>Web Portal</th>
+                            <th>Credentials</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody id="vendorsTableBody">
+                        <tr>
+                            <td>DNS Registrar</td>
+                            <td>Route53, Godaddy, Cloudflare</td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="text" class="form-input" placeholder="Details"></td>
+                            <td><input type="text" class="form-input" placeholder="Contact"></td>
+                            <td><input type="url" class="form-input" placeholder="Portal URL"></td>
+                            <td><input type="text" class="form-input" placeholder="Username/Password"></td>
+                            <td><input type="text" class="form-input" placeholder="Notes"></td>
+                        </tr>
+                        <tr>
+                            <td>Dynamic DNS</td>
+                            <td>DynDNS, ZoneAlert</td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="text" class="form-input" placeholder="Details"></td>
+                            <td><input type="text" class="form-input" placeholder="Contact"></td>
+                            <td><input type="url" class="form-input" placeholder="Portal URL"></td>
+                            <td><input type="text" class="form-input" placeholder="Username/Password"></td>
+                            <td><input type="text" class="form-input" placeholder="Notes"></td>
+                        </tr>
+                        <tr>
+                            <td>Domain Registrar</td>
+                            <td>Godaddy, Cloudflare, Network Solutions</td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="text" class="form-input" placeholder="Details"></td>
+                            <td><input type="text" class="form-input" placeholder="Contact"></td>
+                            <td><input type="url" class="form-input" placeholder="Portal URL"></td>
+                            <td><input type="text" class="form-input" placeholder="Username/Password"></td>
+                            <td><input type="text" class="form-input" placeholder="Notes"></td>
+                        </tr>
+                        <tr>
+                            <td>Cloud Subscriptions</td>
+                            <td>Azure, AWS, Google Cloud</td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="text" class="form-input" placeholder="Details"></td>
+                            <td><input type="text" class="form-input" placeholder="Contact"></td>
+                            <td><input type="url" class="form-input" placeholder="Portal URL"></td>
+                            <td><input type="text" class="form-input" placeholder="Username/Password"></td>
+                            <td><input type="text" class="form-input" placeholder="Notes"></td>
+                        </tr>
+                        <tr>
+                            <td>Virtual Desktops</td>
+                            <td>Win365, Azure Virtual Desktop</td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="text" class="form-input" placeholder="Details"></td>
+                            <td><input type="text" class="form-input" placeholder="Contact"></td>
+                            <td><input type="url" class="form-input" placeholder="Portal URL"></td>
+                            <td><input type="text" class="form-input" placeholder="Username/Password"></td>
+                            <td><input type="text" class="form-input" placeholder="Notes"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Software Applications Section -->
+        <div id="software" class="form-section">
+            <h2 class="text-2xl font-bold mb-4 text-green-600"><i class="fas fa-laptop-code mr-2"></i>Software Applications</h2>
+            
+            <div class="checkbox-group mb-4">
+                <input type="checkbox" id="softwareComplete">
+                <label for="softwareComplete">Check this box when you have entered all available information</label>
+            </div>
+
+            <p class="text-gray-600 mb-6">Does your company rely on one or more software applications for your business (eg. Adobe, Autodesk, Zbrush, etc.)? For each application, please provide the following information.</p>
+
+            <div class="mb-4">
+                <button type="button" class="btn-primary" onclick="addSoftware()">
+                    <i class="fas fa-plus mr-2"></i>Add Software Application
+                </button>
+            </div>
+
+            <div id="softwareList"></div>
+        </div>
+
+        <!-- Server Infrastructure Section -->
+        <div id="servers" class="form-section">
+            <h2 class="text-2xl font-bold mb-4 text-green-600"><i class="fas fa-server mr-2"></i>Server Infrastructure</h2>
+            
+            <div class="checkbox-group mb-4">
+                <input type="checkbox" id="serversComplete">
+                <label for="serversComplete">Check this box when you have entered all available information</label>
+            </div>
+
+            <p class="text-gray-600 mb-6">Enter details on all of the SERVER INFRASTRUCTURE at ALL of your LOCATIONS.</p>
+
+            <div class="mb-4">
+                <button type="button" class="btn-primary" onclick="addServer()">
+                    <i class="fas fa-plus mr-2"></i>Add Server
+                </button>
+            </div>
+
+            <div id="serversList"></div>
+        </div>
+
+        <!-- Equipment Section -->
+        <div id="equipment" class="form-section">
+            <h2 class="text-2xl font-bold mb-4 text-green-600"><i class="fas fa-tools mr-2"></i>On-Premise Equipment</h2>
+            
+            <div class="checkbox-group mb-4">
+                <input type="checkbox" id="equipmentComplete">
+                <label for="equipmentComplete">Check this box when you have entered all available information</label>
+            </div>
+
+            <p class="text-gray-600 mb-6">Enter details on all of the following types of EQUIPMENT at ALL of your LOCATIONS.</p>
+
+            <div class="mb-4">
+                <button type="button" class="btn-primary" onclick="addEquipment()">
+                    <i class="fas fa-plus mr-2"></i>Add Equipment
+                </button>
+            </div>
+
+            <div id="equipmentList"></div>
+        </div>
+
+        <!-- Network Printers Section -->
+        <div id="printers" class="form-section">
+            <h2 class="text-2xl font-bold mb-4 text-green-600"><i class="fas fa-print mr-2"></i>Network Printers</h2>
+            
+            <div class="checkbox-group mb-4">
+                <input type="checkbox" id="printersComplete">
+                <label for="printersComplete">Check this box when you have entered all available information</label>
+            </div>
+
+            <p class="text-gray-600 mb-6">Enter details on all of the NETWORK printers at ALL of your LOCATIONS.</p>
+
+            <div class="mb-4">
+                <button type="button" class="btn-primary" onclick="addPrinter()">
+                    <i class="fas fa-plus mr-2"></i>Add Printer
+                </button>
+            </div>
+
+            <div id="printersList"></div>
+        </div>
+
+        <!-- VoIP Services Section -->
+        <div id="voip" class="form-section">
+            <h2 class="text-2xl font-bold mb-4 text-green-600"><i class="fas fa-phone mr-2"></i>VoIP Service Provider Information by Location</h2>
+            
+            <p class="text-gray-600 mb-6">Provide details for EACH VoIP Service Provider at each Physical Location.</p>
+
+            <div id="voipByLocation"></div>
+        </div>
+
+        <!-- Save/Export Section -->
+        <div class="bg-white rounded-lg shadow-md p-6 mt-6 no-print">
+            <h3 class="text-xl font-bold text-green-600 mb-4">Save & Export Options</h3>
+            <div class="flex flex-wrap gap-4">
+                <button type="button" class="btn-primary" onclick="saveProgress()">
+                    <i class="fas fa-save mr-2"></i>Save Progress
+                </button>
+                <button type="button" class="btn-secondary" onclick="exportData()">
+                    <i class="fas fa-download mr-2"></i>Export Data (JSON)
+                </button>
+                <button type="button" class="btn-secondary" onclick="window.print()">
+                    <i class="fas fa-file-pdf mr-2"></i>Print/Export PDF
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let locations = [];
+        let currentTab = 'dashboard';
+
+        // Tab switching function
+        function showTab(tabId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.form-section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Remove active class from all buttons
+            const buttons = document.querySelectorAll('.tab-button');
+            buttons.forEach(button => {
+                button.classList.remove('active');
+            });
+
+            // Show selected section
+            const targetSection = document.getElementById(tabId);
+            if (targetSection) {
+                targetSection.classList.add('active');
+            }
+
+            // Add active class to clicked button
+            const clickedButton = event ? event.target : document.querySelector(`button[onclick*="${tabId}"]`);
+            if (clickedButton) {
+                clickedButton.classList.add('active');
+            }
+
+            currentTab = tabId;
+
+            // Update location-based sections when switching
+            if (tabId === 'alarm') {
+                updateAlarmSection();
+            } else if (tabId === 'isp') {
+                updateISPSection();
+            } else if (tabId === 'voip') {
+                updateVoipSection();
+            }
+
+            updateProgress();
+        }
+
+        // Add Location function
+        function addLocation() {
+            const locationId = 'location_' + Date.now();
+            const location = {
+                id: locationId,
+                name: '',
+                street: '',
+                suite: '',
+                city: '',
+                state: '',
+                zip: '',
+                isBilling: false,
+                isHistorical: false,
+                hasFloorplan: false,
+                notes: ''
+            };
+
+            locations.push(location);
+            renderLocations();
+        }
+
+        // Render Locations
+        function renderLocations() {
+            const container = document.getElementById('locationsList');
+            container.innerHTML = '';
+
+            locations.forEach((location, index) => {
+                const locationCard = document.createElement('div');
+                locationCard.className = 'location-card';
+                locationCard.innerHTML = `
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-bold">Location ${index + 1}</h3>
+                        <button type="button" class="btn-secondary text-sm" onclick="removeLocation('${location.id}')">
+                            <i class="fas fa-trash mr-1"></i>Remove
+                        </button>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-4 mb-4">
+                        <div class="form-group">
+                            <label class="form-label">Unique Name <span class="required">*</span></label>
+                            <input type="text" class="form-input" value="${location.name}" 
+                                   onchange="updateLocation('${location.id}', 'name', this.value)"
+                                   placeholder="e.g., HQ, Warehouse #1">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Street Address <span class="required">*</span></label>
+                            <input type="text" class="form-input" value="${location.street}"
+                                   onchange="updateLocation('${location.id}', 'street', this.value)"
+                                   placeholder="Street Address">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Suite</label>
+                            <input type="text" class="form-input" value="${location.suite}"
+                                   onchange="updateLocation('${location.id}', 'suite', this.value)"
+                                   placeholder="Suite/Unit">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">City <span class="required">*</span></label>
+                            <input type="text" class="form-input" value="${location.city}"
+                                   onchange="updateLocation('${location.id}', 'city', this.value)"
+                                   placeholder="City">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">State <span class="required">*</span></label>
+                            <input type="text" class="form-input" value="${location.state}"
+                                   onchange="updateLocation('${location.id}', 'state', this.value)"
+                                   placeholder="State">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Zip Code <span class="required">*</span></label>
+                            <input type="text" class="form-input" value="${location.zip}"
+                                   onchange="updateLocation('${location.id}', 'zip', this.value)"
+                                   placeholder="Zip Code">
+                        </div>
+                    </div>
+
+                    <div class="space-y-3 mb-4">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="billing_${location.id}" ${location.isBilling ? 'checked' : ''}
+                                   onchange="updateBillingAddress('${location.id}', this.checked)">
+                            <label for="billing_${location.id}">This is the main Billing Address</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="historical_${location.id}" ${location.isHistorical ? 'checked' : ''}
+                                   onchange="updateLocation('${location.id}', 'isHistorical', this.checked)">
+                            <label for="historical_${location.id}">This building is considered "historical" or protected by regulations</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="floorplan_${location.id}" ${location.hasFloorplan ? 'checked' : ''}
+                                   onchange="updateLocation('${location.id}', 'hasFloorplan', this.checked)">
+                            <label for="floorplan_${location.id}">Can provide floorplan (include ISP entry and data drops if possible)</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Notes</label>
+                        <textarea class="form-input" rows="2" 
+                                  onchange="updateLocation('${location.id}', 'notes', this.value)"
+                                  placeholder="Additional notes about this location">${location.notes}</textarea>
+                    </div>
+                `;
+                container.appendChild(locationCard);
+            });
+        }
+
+        // Update Location
+        function updateLocation(locationId, field, value) {
+            const location = locations.find(loc => loc.id === locationId);
+            if (location) {
+                location[field] = value;
+                updateProgress();
+            }
+        }
+
+        // Update Billing Address
+        function updateBillingAddress(locationId, isBilling) {
+            locations.forEach(location => {
+                location.isBilling = location.id === locationId ? isBilling : false;
+            });
+            renderLocations();
+            updateProgress();
+        }
+
+        // Remove Location
+        function removeLocation(locationId) {
+            locations = locations.filter(location => location.id !== locationId);
+            renderLocations();
+            updateAlarmSection();
+            updateISPSection();
+            updateVoipSection();
+            updateProgress();
+        }
+
+        // Update Alarm Section
+        function updateAlarmSection() {
+            const container = document.getElementById('alarmByLocation');
+            container.innerHTML = '';
+
+            if (locations.length === 0) {
+                container.innerHTML = '<p class="text-gray-500 italic">No locations added yet. Please add locations in the Physical Locations section first.</p>';
+                return;
+            }
+
+            locations.forEach(location => {
+                const alarmCard = document.createElement('div');
+                alarmCard.className = 'location-card';
+                alarmCard.innerHTML = `
+                    <h3 class="text-lg font-bold mb-4">${location.name || 'Unnamed Location'}</h3>
+                    
+                    <div class="form-group mb-4">
+                        <label class="form-label">Is there an alarm system at this location?</label>
+                        <div class="flex items-center space-x-4">
+                            <label class="flex items-center">
+                                <input type="radio" name="alarm_${location.id}" value="yes" 
+                                       onchange="toggleAlarmDetails('${location.id}', true)" class="mr-2">
+                                <span>Yes</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="radio" name="alarm_${location.id}" value="no"
+                                       onchange="toggleAlarmDetails('${location.id}', false)" class="mr-2">
+                                <span>No</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div id="alarmDetails_${location.id}" style="display: none;">
+                        <div class="table-responsive mb-4">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Company Name</th>
+                                        <th>Alarm System</th>
+                                        <th>Phone Number</th>
+                                        <th>Account Number</th>
+                                        <th>Website</th>
+                                        <th>Communication Method</th>
+                                        <th>Notes</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><input type="text" class="form-input" placeholder="Monitoring Company"></td>
+                                        <td><input type="text" class="form-input" placeholder="System Type/Brand"></td>
+                                        <td><input type="tel" class="form-input" placeholder="Phone"></td>
+                                        <td><input type="text" class="form-input" placeholder="Account #"></td>
+                                        <td><input type="url" class="form-input" placeholder="Website"></td>
+                                        <td><input type="text" class="form-input" placeholder="How it communicates"></td>
+                                        <td><input type="text" class="form-input" placeholder="Notes"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="upload-area">
+                                <i class="fas fa-camera fa-2x text-green-500 mb-2"></i>
+                                <p class="font-bold">Upload Photos of Alarm System</p>
+                                <p class="text-sm text-gray-600 mb-2">Multiple files allowed</p>
+                                <input type="file" multiple accept="image/*" class="form-input">
+                            </div>
+                            <div class="upload-area">
+                                <i class="fas fa-file-invoice fa-2x text-green-500 mb-2"></i>
+                                <p class="font-bold">Upload Bills/Statements</p>
+                                <p class="text-sm text-gray-600 mb-2">Multiple files allowed</p>
+                                <input type="file" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" class="form-input">
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(alarmCard);
+            });
+        }
+
+        // Toggle Alarm Details
+        function toggleAlarmDetails(locationId, show) {
+            const detailsDiv = document.getElementById(`alarmDetails_${locationId}`);
+            if (detailsDiv) {
+                detailsDiv.style.display = show ? 'block' : 'none';
+            }
+            updateProgress();
+        }
+
+        // Update ISP Section
+        function updateISPSection() {
+            const container = document.getElementById('ispByLocation');
+            container.innerHTML = '';
+
+            if (locations.length === 0) {
+                container.innerHTML = '<p class="text-gray-500 italic">No locations added yet. Please add locations in the Physical Locations section first.</p>';
+                return;
+            }
+
+            locations.forEach(location => {
+                const ispCard = document.createElement('div');
+                ispCard.className = 'location-card';
+                ispCard.innerHTML = `
+                    <h3 class="text-lg font-bold mb-4">${location.name || 'Unnamed Location'}</h3>
+                    
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ISP Name</th>
+                                    <th>Speed (Expected)</th>
+                                    <th>Connection Type</th>
+                                    <th>Account Number</th>
+                                    <th>Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><input type="text" class="form-input" placeholder="ISP Company Name"></td>
+                                    <td><input type="text" class="form-input" placeholder="e.g., 100 Mbps"></td>
+                                    <td><input type="text" class="form-input" placeholder="e.g., Fiber, Cable"></td>
+                                    <td><input type="text" class="form-input" placeholder="Account Number"></td>
+                                    <td><input type="text" class="form-input" placeholder="Additional notes"></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text" class="form-input" placeholder="Backup ISP (if any)"></td>
+                                    <td><input type="text" class="form-input" placeholder="Speed"></td>
+                                    <td><input type="text" class="form-input" placeholder="Connection Type"></td>
+                                    <td><input type="text" class="form-input" placeholder="Account Number"></td>
+                                    <td><input type="text" class="form-input" placeholder="Notes"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="mt-4 space-y-3">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="ispPhotos_${location.id}">
+                            <label for="ispPhotos_${location.id}">Can you provide photos of the ISP equipment at this location?</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="ispBills_${location.id}">
+                            <label for="ispBills_${location.id}">Can you provide copies of ISP billing statements for this location?</label>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(ispCard);
+            });
+        }
+
+        // Update VoIP Section
+        function updateVoipSection() {
+            const container = document.getElementById('voipByLocation');
+            container.innerHTML = '';
+
+            if (locations.length === 0) {
+                container.innerHTML = '<p class="text-gray-500 italic">No locations added yet. Please add locations in the Physical Locations section first.</p>';
+                return;
+            }
+
+            locations.forEach(location => {
+                const voipCard = document.createElement('div');
+                voipCard.className = 'location-card';
+                voipCard.innerHTML = `
+                    <h3 class="text-lg font-bold mb-4">${location.name || 'Unnamed Location'}</h3>
+                    
+                    <div class="form-group mb-4">
+                        <label class="form-label">Do you want TTC VoIP at this location?</label>
+                        <div class="flex items-center space-x-4">
+                            <label class="flex items-center">
+                                <input type="radio" name="ttcVoip_${location.id}" value="yes" class="mr-2">
+                                <span>Yes</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="radio" name="ttcVoip_${location.id}" value="no" class="mr-2">
+                                <span>No</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>VoIP Provider Name</th>
+                                    <th>Account Number</th>
+                                    <th>Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><input type="text" class="form-input" placeholder="Current VoIP Provider"></td>
+                                    <td><input type="text" class="form-input" placeholder="Account Number"></td>
+                                    <td><input type="text" class="form-input" placeholder="Additional notes"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="mt-4 space-y-3">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="voipPhotos_${location.id}">
+                            <label for="voipPhotos_${location.id}">Can you provide photos of the VoIP equipment at this location?</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="voipBills_${location.id}">
+                            <label for="voipBills_${location.id}">Can you provide copies of VoIP billing statements for this location?</label>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(voipCard);
+            });
+        }
+
+        // Add User function
+        function addUser() {
+            const tbody = document.getElementById('usersTableBody');
+            const row = document.createElement('tr');
+            const userId = 'user_' + Date.now();
+            
+            row.innerHTML = `
+                <td><input type="text" class="form-input" placeholder="Last Name"></td>
+                <td><input type="text" class="form-input" placeholder="First Name"></td>
+                <td><input type="checkbox" onchange="handleUserTypeChange('${userId}', 'standard', this)"></td>
+                <td><input type="checkbox" onchange="handleUserTypeChange('${userId}', 'restricted', this)"></td>
+                <td><input type="checkbox" onchange="handleUserTypeChange('${userId}', 'email', this)"></td>
+                <td><input type="text" class="form-input" placeholder="Notes"></td>
+                <td><button type="button" class="btn-secondary text-sm" onclick="removeUser(this)">Remove</button></td>
+            `;
+            
+            tbody.appendChild(row);
+        }
+
+        // Handle User Type Change (ensure only one is selected)
+        function handleUserTypeChange(userId, type, checkbox) {
+            if (checkbox.checked) {
+                const row = checkbox.closest('tr');
+                const checkboxes = row.querySelectorAll('input[type="checkbox"]');
+                checkboxes.forEach(cb => {
+                    if (cb !== checkbox) cb.checked = false;
+                });
+            }
+            updateProgress();
+        }
+
+        // Remove User
+        function removeUser(button) {
+            const row = button.closest('tr');
+            row.remove();
+            updateProgress();
+        }
+
+        // Add Software Application
+        function addSoftware() {
+            const container = document.getElementById('softwareList');
+            const softwareCard = document.createElement('div');
+            softwareCard.className = 'location-card';
+            
+            softwareCard.innerHTML = `
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-bold">Software Application</h3>
+                    <button type="button" class="btn-secondary text-sm" onclick="removeSoftware(this)">
+                        <i class="fas fa-trash mr-1"></i>Remove
+                    </button>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-4 mb-4">
+                    <div class="form-group">
+                        <label class="form-label">Software Application Name <span class="required">*</span></label>
+                        <input type="text" class="form-input" placeholder="e.g., Adobe Photoshop, QuickBooks">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Deployment Type</label>
+                        <select class="form-input">
+                            <option value="">Select deployment type</option>
+                            <option value="cloud">Cloud-based</option>
+                            <option value="local">Local Installation</option>
+                            <option value="unknown">Unknown</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">How is this software used?</label>
+                        <textarea class="form-input" rows="2" placeholder="Describe how your company uses this software"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Known Issues</label>
+                        <textarea class="form-input" rows="2" placeholder="Any known issues with this software?"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Software Version</label>
+                        <input type="text" class="form-input" placeholder="Version or revision level">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">License Portal URL</label>
+                        <input type="url" class="form-input" placeholder="https://...">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Admin Username</label>
+                        <input type="text" class="form-input" placeholder="Admin username">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Admin Password</label>
+                        <input type="password" class="form-input" placeholder="Admin password">
+                    </div>
+                </div>
+            `;
+            
+            container.appendChild(softwareCard);
+        }
+
+        // Remove Software
+        function removeSoftware(button) {
+            const card = button.closest('.location-card');
+            card.remove();
+            updateProgress();
+        }
+
+        // Add Server
+        function addServer() {
+            const container = document.getElementById('serversList');
+            const serverCard = document.createElement('div');
+            serverCard.className = 'location-card';
+            
+            serverCard.innerHTML = `
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-bold">Server</h3>
+                    <button type="button" class="btn-secondary text-sm" onclick="removeServer(this)">
+                        <i class="fas fa-trash mr-1"></i>Remove
+                    </button>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-4 mb-4">
+                    <div class="form-group">
+                        <label class="form-label">Location</label>
+                        <select class="form-input">
+                            <option value="">Select location</option>
+                            ${locations.map(loc => `<option value="${loc.id}">${loc.name || 'Unnamed Location'}</option>`).join('')}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Server Type</label>
+                        <select class="form-input">
+                            <option value="">Select type</option>
+                            <option value="physical">Physical</option>
+                            <option value="virtual">Virtual</option>
+                            <option value="unknown">Unknown</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Server Name</label>
+                        <input type="text" class="form-input" placeholder="Server name/hostname">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">IP Address</label>
+                        <input type="text" class="form-input" placeholder="IP address">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Make</label>
+                        <input type="text" class="form-input" placeholder="e.g., Dell, HP">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Model</label>
+                        <input type="text" class="form-input" placeholder="Model number">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Operating System</label>
+                        <input type="text" class="form-input" placeholder="e.g., Windows Server 2019">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Username</label>
+                        <input type="text" class="form-input" placeholder="Admin username">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <input type="password" class="form-input" placeholder="Admin password">
+                    </div>
+                </div>
+                
+                <div class="form-group mb-4">
+                    <label class="form-label">Server Roles (check all that apply)</label>
+                    <div class="grid md:grid-cols-4 gap-2">
+                        <label class="checkbox-group"><input type="checkbox"> DHCP</label>
+                        <label class="checkbox-group"><input type="checkbox"> DNS</label>
+                        <label class="checkbox-group"><input type="checkbox"> Application Server</label>
+                        <label class="checkbox-group"><input type="checkbox"> Database Server</label>
+                        <label class="checkbox-group"><input type="checkbox"> Domain Controller</label>
+                        <label class="checkbox-group"><input type="checkbox"> Exchange Server</label>
+                        <label class="checkbox-group"><input type="checkbox"> File Server</label>
+                        <label class="checkbox-group"><input type="checkbox"> Print Server</label>
+                        <label class="checkbox-group"><input type="checkbox"> Terminal Server</label>
+                        <label class="checkbox-group"><input type="checkbox"> Web Server</label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Notes</label>
+                    <textarea class="form-input" rows="2" placeholder="Additional notes about this server"></textarea>
+                </div>
+            `;
+            
+            container.appendChild(serverCard);
+        }
+
+        // Remove Server
+        function removeServer(button) {
+            const card = button.closest('.location-card');
+            card.remove();
+            updateProgress();
+        }
+
+        // Add Equipment
+        function addEquipment() {
+            const container = document.getElementById('equipmentList');
+            const equipmentCard = document.createElement('div');
+            equipmentCard.className = 'location-card';
+            
+            equipmentCard.innerHTML = `
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-bold">Equipment</h3>
+                    <button type="button" class="btn-secondary text-sm" onclick="removeEquipment(this)">
+                        <i class="fas fa-trash mr-1"></i>Remove
+                    </button>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-4 mb-4">
+                    <div class="form-group">
+                        <label class="form-label">Location</label>
+                        <select class="form-input">
+                            <option value="">Select location</option>
+                            ${locations.map(loc => `<option value="${loc.id}">${loc.name || 'Unnamed Location'}</option>`).join('')}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Equipment Type</label>
+                        <select class="form-input">
+                            <option value="">Select type</option>
+                            <option value="firewall">Firewall</option>
+                            <option value="nas">NAS/SAN</option>
+                            <option value="switch">Switch</option>
+                            <option value="ups">UPS</option>
+                            <option value="wireless">Wireless</option>
+                            <option value="misc">Miscellaneous</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Description</label>
+                        <input type="text" class="form-input" placeholder="Equipment description">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">IP Address</label>
+                        <input type="text" class="form-input" placeholder="IP address">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">MAC Address</label>
+                        <input type="text" class="form-input" placeholder="MAC address">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Make</label>
+                        <input type="text" class="form-input" placeholder="Manufacturer">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Model</label>
+                        <input type="text" class="form-input" placeholder="Model number">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Username</label>
+                        <input type="text" class="form-input" placeholder="Admin username">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <input type="password" class="form-input" placeholder="Admin password">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Notes</label>
+                    <textarea class="form-input" rows="2" placeholder="Additional notes about this equipment"></textarea>
+                </div>
+            `;
+            
+            container.appendChild(equipmentCard);
+        }
+
+        // Remove Equipment
+        function removeEquipment(button) {
+            const card = button.closest('.location-card');
+            card.remove();
+            updateProgress();
+        }
+
+        // Add Printer
+        function addPrinter() {
+            const container = document.getElementById('printersList');
+            const printerCard = document.createElement('div');
+            printerCard.className = 'location-card';
+            
+            printerCard.innerHTML = `
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-bold">Network Printer</h3>
+                    <button type="button" class="btn-secondary text-sm" onclick="removePrinter(this)">
+                        <i class="fas fa-trash mr-1"></i>Remove
+                    </button>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-4 mb-4">
+                    <div class="form-group">
+                        <label class="form-label">Location</label>
+                        <select class="form-input">
+                            <option value="">Select location</option>
+                            ${locations.map(loc => `<option value="${loc.id}">${loc.name || 'Unnamed Location'}</option>`).join('')}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Physical Location</label>
+                        <input type="text" class="form-input" placeholder="Where is the printer located?">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">IP Address</label>
+                        <input type="text" class="form-input" placeholder="Printer IP address">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Make</label>
+                        <input type="text" class="form-input" placeholder="e.g., HP, Canon">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Model</label>
+                        <input type="text" class="form-input" placeholder="Printer model">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Multi-function Device?</label>
+                        <select class="form-input">
+                            <option value="">Select</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Other Functions Used</label>
+                        <input type="text" class="form-input" placeholder="e.g., scan, fax, copy">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Username</label>
+                        <input type="text" class="form-input" placeholder="Admin username">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <input type="password" class="form-input" placeholder="Admin password">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Notes</label>
+                    <textarea class="form-input" rows="2" placeholder="Additional notes about this printer"></textarea>
+                </div>
+            `;
+            
+            container.appendChild(printerCard);
+        }
+
+        // Remove Printer
+        function removePrinter(button) {
+            const card = button.closest('.location-card');
+            card.remove();
+            updateProgress();
+        }
+
+        // Update Progress
+        function updateProgress() {
+            // Calculate completion percentage based on form fields
+            let totalFields = 0;
+            let completedFields = 0;
+
+            // Count required fields in each section
+            const sections = ['initial', 'overview', 'locations', 'users', 'isp', 'alarm', 'vendors', 'software', 'servers', 'equipment', 'printers', 'voip'];
+            
+            sections.forEach(sectionId => {
+                const section = document.getElementById(sectionId);
+                if (section) {
+                    const inputs = section.querySelectorAll('input, select, textarea');
+                    inputs.forEach(input => {
+                        totalFields++;
+                        if (input.value.trim() !== '' || (input.type === 'checkbox' && input.checked) || (input.type === 'radio' && input.checked)) {
+                            completedFields++;
+                        }
+                    });
+                }
+            });
+
+            // Add location completion
+            totalFields += locations.length * 6; // 6 required fields per location
+            completedFields += locations.filter(loc => 
+                loc.name && loc.street && loc.city && loc.state && loc.zip
+            ).length * 6;
+
+            const percentage = totalFields > 0 ? Math.round((completedFields / totalFields) * 100) : 0;
+            
+            document.getElementById('overallProgress').style.width = percentage + '%';
+            document.getElementById('progressText').textContent = percentage + '%';
+
+            // Update individual section statuses
+            const statusElements = {
+                'initialStatus': checkSectionCompletion('initial'),
+                'overviewStatus': checkSectionCompletion('overview'),
+                'locationsStatus': locations.length > 0 ? 'Complete' : 'Incomplete',
+                'usersStatus': checkSectionCompletion('users'),
+                'ispStatus': checkSectionCompletion('isp'),
+                'alarmStatus': checkSectionCompletion('alarm'),
+                'vendorsStatus': checkSectionCompletion('vendors'),
+                'softwareStatus': checkSectionCompletion('software'),
+                'serversStatus': checkSectionCompletion('servers'),
+                'equipmentStatus': checkSectionCompletion('equipment')
+            };
+
+            Object.entries(statusElements).forEach(([elementId, status]) => {
+                const element = document.getElementById(elementId);
+                if (element) {
+                    element.textContent = status;
+                    element.className = status === 'Complete' ? 'text-sm font-bold text-green-600' : 'text-sm font-bold text-red-600';
+                }
+            });
+        }
+
+        // Check Section Completion
+        function checkSectionCompletion(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (!section) return 'Incomplete';
+            
+            const requiredInputs = section.querySelectorAll('input[required], .form-input');
+            let completed = 0;
+            let total = 0;
+            
+            requiredInputs.forEach(input => {
+                total++;
+                if (input.value.trim() !== '' || (input.type === 'checkbox' && input.checked) || (input.type === 'radio' && input.checked)) {
+                    completed++;
+                }
+            });
+            
+            return completed > 0 && completed >= total * 0.5 ? 'Complete' : 'Incomplete';
+        }
+
+        // Generate Overview Blurb
+        function generateOverviewBlurb() {
+            const clientName = document.getElementById('overviewClientName')?.value || '[Client Name]';
+            const clientAbbrev = document.getElementById('clientAbbrev')?.value;
+            const businessNature = document.getElementById('businessNature')?.value || '[Business Description]';
+            const businessSize = document.getElementById('businessSize')?.value || '[Size]';
+            const sites = document.getElementById('overviewSites')?.value || '[#]';
+            const users = document.getElementById('overviewUsers')?.value || '[#]';
+            const emailHost = document.getElementById('emailHost')?.value || '[Email Host]';
+            const app1 = document.getElementById('primaryApp1')?.value;
+            const app2 = document.getElementById('primaryApp2')?.value;
+            const app3 = document.getElementById('primaryApp3')?.value;
+            const vip1Name = document.getElementById('vip1Name')?.value;
+            const vip1Title = document.getElementById('vip1Title')?.value;
+            const vip2Name = document.getElementById('vip2Name')?.value;
+            const vip2Title = document.getElementById('vip2Title')?.value;
+            const poc1Name = document.getElementById('poc1Name')?.value;
+            const poc1Title = document.getElementById('poc1Title')?.value;
+            const nuances = document.getElementById('clientNuances')?.value || '';
+            const source = document.getElementById('infoSource')?.value || '[Source]';
+            const date = document.getElementById('infoDate')?.value || '[Date]';
+
+            // Build applications list
+            let applications = '';
+            const apps = [app1, app2, app3].filter(app => app && app.trim() !== '');
+            if (apps.length > 0) {
+                if (apps.length === 1) {
+                    applications = `Their primary application is ${apps[0]}.`;
+                } else {
+                    applications = `Their primary applications are ${apps.join(' and ')}.`;
+                }
+            } else {
+                applications = 'Their primary application is [Application].';
+            }
+
+            // Build VIPs list
+            let vips = '';
+            const vipList = [];
+            if (vip1Name && vip1Title) vipList.push(`${vip1Name} (${vip1Title})`);
+            if (vip2Name && vip2Title) vipList.push(`${vip2Name} (${vip2Title})`);
+            
+            if (vipList.length > 0) {
+                if (vipList.length === 1) {
+                    vips = `There is 1 VIP: ${vipList[0]}.`;
+                } else {
+                    vips = `There are ${vipList.length} VIPs: ${vipList.join(' and ')}.`;
+                }
+            } else {
+                vips = 'There are [#] VIPs: [Names and Titles].';
+            }
+
+            // Build POC
+            let poc = '';
+            if (poc1Name && poc1Title) {
+                poc = `Our main point of contact is ${poc1Name} (${poc1Title}).`;
+            } else {
+                poc = 'Our main point of contact is [Name] ([Title]).';
+            }
+
+            const fullName = clientAbbrev ? `${clientName} (aka ${clientAbbrev})` : clientName;
+
+            const blurb = `${fullName} is a ${businessSize} sized business with ${sites} location${sites !== '1' ? 's' : ''} and roughly ${users} users. ${businessNature} Their email is hosted in ${emailHost}. ${applications} ${vips} ${poc}${nuances ? ' ' + nuances : ''}
+
+Source: ${source} (${date})`;
+
+            document.getElementById('generatedBlurb').textContent = blurb;
+        }
+
+        // Auto-generate blurb when fields change
+        document.addEventListener('input', function(e) {
+            if (e.target.closest('#overview')) {
+                generateOverviewBlurb();
+            }
+        });
+
+        // Handle MSP details visibility
+        document.addEventListener('change', function(e) {
+            if (e.target.name === 'outgoingMSP') {
+                const mspDetails = document.getElementById('mspDetails');
+                if (mspDetails) {
+                    mspDetails.style.display = e.target.value === 'yes' ? 'block' : 'none';
+                }
+            }
+        });
+
+        // Save Progress
+        function saveProgress() {
+            const formData = {
+                locations: locations,
+                currentTab: currentTab,
+                timestamp: new Date().toISOString()
+            };
+
+            // Collect all form data
+            const inputs = document.querySelectorAll('input, select, textarea');
+            inputs.forEach(input => {
+                if (input.name || input.id) {
+                    const key = input.name || input.id;
+                    if (input.type === 'checkbox' || input.type === 'radio') {
+                        formData[key] = input.checked;
+                    } else {
+                        formData[key] = input.value;
+                    }
+                }
+            });
+
+            localStorage.setItem('ttc_discovery_form', JSON.stringify(formData));
+            
+            const successDiv = document.createElement('div');
+            successDiv.className = 'success';
+            successDiv.textContent = 'Progress saved successfully!';
+            document.body.insertBefore(successDiv, document.body.firstChild);
+            
+            setTimeout(() => successDiv.remove(), 3000);
+        }
+
+        // Export Data
+        function exportData() {
+            const formData = {
+                locations: locations,
+                exportDate: new Date().toISOString(),
+                sections: {}
+            };
+
+            // Collect all form data by sections
+            const sections = ['initial', 'overview', 'locations', 'users', 'isp', 'alarm', 'vendors', 'software', 'servers', 'equipment', 'printers', 'voip'];
+            
+            sections.forEach(sectionId => {
+                const section = document.getElementById(sectionId);
+                if (section) {
+                    formData.sections[sectionId] = {};
+                    const inputs = section.querySelectorAll('input, select, textarea');
+                    inputs.forEach(input => {
+                        const key = input.name || input.id || `unnamed_${Math.random()}`;
+                        if (input.type === 'checkbox' || input.type === 'radio') {
+                            formData.sections[sectionId][key] = input.checked;
+                        } else {
+                            formData.sections[sectionId][key] = input.value;
+                        }
+                    });
+                }
+            });
+
+            const dataStr = JSON.stringify(formData, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(dataBlob);
+            link.download = `ttc_discovery_${new Date().toISOString().split('T')[0]}.json`;
+            link.click();
+        }
+
+        // Load saved progress on page load
+        function loadProgress() {
+            const saved = localStorage.getItem('ttc_discovery_form');
+            if (saved) {
+                try {
+                    const formData = JSON.parse(saved);
+                    
+                    // Restore locations
+                    if (formData.locations) {
+                        locations = formData.locations;
+                        renderLocations();
+                    }
+
+                    // Restore form fields
+                    Object.entries(formData).forEach(([key, value]) => {
+                        const element = document.getElementById(key) || document.querySelector(`[name="${key}"]`);
+                        if (element) {
+                            if (element.type === 'checkbox' || element.type === 'radio') {
+                                element.checked = value;
+                            } else {
+                                element.value = value;
+                            }
+                        }
+                    });
+
+                    updateProgress();
+                } catch (error) {
+                    console.error('Error loading saved progress:', error);
+                }
+            }
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProgress();
+            updateProgress();
+            generateOverviewBlurb();
+            
+            // Add sample location for demonstration
+            if (locations.length === 0) {
+                addLocation();
+            }
+        });
+
+        // Auto-save periodically
+        setInterval(saveProgress, 30000); // Save every 30 seconds
+    </script>
+</body>
+</html>
+    <script id="html_badge_script1">
+        window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDn1taeU3oL9JlCs0AQVUgOdptk6Cuak7I4qV%2FTlSuRxGwdo7%2BukARRc%2Fet0kDaMPS0jKVu1qMYbcfZM7oOsw5Eo0x9sy%2BCJDoO0kmZ9OYXOXtB4%2B0FzZ0hcPqBAIT2Uir84KfPN73n9iN8RiXa3U4COYcFZdeawkByyBKgzcpwfj4hvVLfC4y6W3KDE70n44eYp9CvKR5Dt4zimy6BcMTRcTxjomA6rM6BuTwe1lG95slxLuW7ZVA5bXtGdHaJyuYJyjxG8NfrxYKKpe9YtAWr6EgCRzgplT7hjUKTPhQsn3P13LPQPf4BH5xhT8bhk5sIgMJzz%2FRrI6Y0uL3raxmkjcrid69TsnQ2NaSwpCLHC%2BFbXeVSRB6xQs73hVrBeg%2BFvX1cbyGdZdzg%2Ba0cStT1ezUhY58pBMwpDmKHe6SFcYhMeo5uQxiINT6SIruEQOp2c564umZazis9Y84Xs1f58ZAsWf7jFej5DLiC7w%2FWhg%2FWHBk%2Fuhxg4%2BTGH7akDYC50vbn8ybowVETg6JOOndWA%3D";
+        window.__genspark_locale = "en-US";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDn1taeU3oL9JlCs0AQVUgOdptk6Cuak7I4qV/TlSuRxGwdo7+ukARRc/et0kDaMPS0jKVu1qMYbcfZM7oOsw5Eo0x9sy+CJDoO0kmZ9OYXOXtB4+0FzZ0hcPqBAIT2Uir84KfPN73n9iN8RiXa3U4COYcFZdeawkByyBKgzcpwfj4hvVLfC4y6W3KDE70n44eYp9CvKR5Dt4zimy6BcMTRcTxjomA6rM6BuTwe1lG95slxLuW7ZVA5bXtGdHaJyuYJyjxG8NfrxYKKpe9YtAWr6EgCRzgplT7hjUKTPhQsn3P13LPQPf4BH5xhT8bhk5sIgMJzz/RrI6Y0uL3raxmkjcrid69TsnQ2NaSwpCLHC+FbXeVSRB6xQs73hVrBeg+FvX1cbyGdZdzg+a0cStT1ezUhY58pBMwpDmKHe6SFcYhMeo5uQxiINT6SIruEQOp2c564umZazis9Y84Xs1f58ZAsWf7jFej5DLiC7w/Whg/WHBk/uhxg4+TGH7akDYC50vbn8ybowVETg6JOOndWA=";
+    </script>
+    
+    <script id="html_notice_dialog_script" src="https://www.genspark.ai/notice_dialog.js"></script>
+    
